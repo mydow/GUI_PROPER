@@ -48,6 +48,8 @@ $(document).ready(function(){
                     if(validUser){
                         //We close the modal
                         $('#myModal').modal('hide')
+                        $("#nav-login").hide();
+                        $("#nav-user").show();
                     }
                     else{
                       alert("Username does not match any entry in the database.\nPlease try again.")

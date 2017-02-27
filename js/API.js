@@ -12,6 +12,7 @@ $(document).ready(function(){
 
     var userName = "";
     var passWord = "";
+    var action = "";
     var firstName = "";
     var lastName = "";
 
@@ -56,10 +57,279 @@ $(document).ready(function(){
                     };
                 };
             })
-
-//{"type" : "error", "payload" : [{"code" : "6","msg" : "Wrong number or type of arguments"}]}
     })
 
+    // Inventory_get
+    // Role: admin
+    // Gives a list of all drinks available in the system.
+    $.("#inventory_get").click(function(){
+        userName = $("#user").val();
+        passWord = $("#pass").val();
+        action = "inventory_get";
+        $.get(URL,
+            {username: userName, password: passWord, action: action},
+            function(data,status) {
+                if (status != 'success') {
+                    alert("Status: " + status);
+                } else {
+                    console.log(data.type);
+                    //console.log(data.payload[27].username);
+
+                };
+            })
+    })
+
+    //Purchases_get
+    // Role: user
+    // Gives a list of all purchases made by the specified user
+    $.("#purchaces_get").click(function(){
+        userName = $("#user").val();
+        passWord = $("#pass").val();
+        action = "purchases_get";
+        $.get(URL,
+            {username: userName, password: passWord, action: action},
+            function(data,status) {
+                if (status != 'success') {
+                    alert("Status: " + status);
+                } else {
+                    console.log(data.type);
+                    //console.log(data.payload[27].username);
+
+                };
+            })
+    })
+
+    //Purchases_get_all
+    // Role: admin
+    // Gives a list of all purchases made by all users
+    $.("#purchaces_get_all").click(function(){
+        userName = $("#user").val();
+        passWord = $("#pass").val();
+        action = "purchases_get_all";
+        $.get(URL,
+            {username: userName, password: passWord, action: action},
+            function(data,status) {
+                if (status != 'success') {
+                    alert("Status: " + status);
+                } else {
+                    console.log(data.type);
+                    //console.log(data.payload[27].username);
+
+                };
+            })
+    })
+
+    //Purchases_append
+    // Role: user
+    // Additional parameter: beer_id
+    // Adds a purchase of one beer to the system for the specified user. The id of the beer purchased beer is a
+    // required additional parameter.
+    $.("#purchaces_append").click(function(){
+        userName = $("#user").val();
+        passWord = $("#pass").val();
+        action = "purchases_append";
+        $.get(URL,
+            {username: userName, password: passWord, action: action},
+            function(data,status) {
+                if (status != 'success') {
+                    alert("Status: " + status);
+                } else {
+                    console.log(data.type);
+                    //console.log(data.payload[27].username);
+
+                };
+            })
+    })
+
+    //Payments_get
+    // Role: user
+    // Returns a list of payments made by the specified user
+    $.("#payments_get").click(function(){
+        userName = $("#user").val();
+        passWord = $("#pass").val();
+        action = "payments_get";
+        $.get(URL,
+            {username: userName, password: passWord, action: action},
+            function(data,status) {
+                if (status != 'success') {
+                    alert("Status: " + status);
+                } else {
+                    console.log(data.type);
+                    //console.log(data.payload[27].username);
+
+                };
+            })
+    })
+
+    //Payments_get_all
+    // Role: admin
+    // Returns a list of payments made by all users.
+    $.("#payments_get_all").click(function(){
+        userName = $("#user").val();
+        passWord = $("#pass").val();
+        action = "payments_get_all";
+        $.get(URL,
+            {username: userName, password: passWord, action: action},
+            function(data,status) {
+                if (status != 'success') {
+                    alert("Status: " + status);
+                } else {
+                    console.log(data.type);
+                    //console.log(data.payload[27].username);
+
+                };
+            })
+    })
+
+    //Payments_append
+    // Role: user
+    // Additional parameter: amount, user_id
+    // Adds a payment of specified amount to the system for the specified user. The amount is a required
+    // additional parameter.
+    $.("#payments_append").click(function(){
+        userName = $("#user").val();
+        passWord = $("#pass").val();
+        action = "payments_append";
+        $.get(URL,
+            {username: userName, password: passWord, action: action},
+            function(data,status) {
+                if (status != 'success') {
+                    alert("Status: " + status);
+                } else {
+                    console.log(data.type);
+                    //console.log(data.payload[27].username);
+
+                };
+            })
+    })
+
+    //Iou_get
+    // Role: user
+    // Returns the total amount that the specified user has at his disposal for buying beer. A negative balance
+    // means that the user has a debt.
+    $.("#iou_get").click(function(){
+        userName = $("#user").val();
+        passWord = $("#pass").val();
+        action = "iou_get";
+        $.get(URL,
+            {username: userName, password: passWord, action: action},
+            function(data,status) {
+                if (status != 'success') {
+                    alert("Status: " + status);
+                } else {
+                    console.log(data.type);
+                    //console.log(data.payload[27].username);
+
+                };
+            })
+    })
+
+    //Iou_get_all
+    // Role: admin
+    // Returns all users and amounts they have at their disposal. For users with a negative balance it means
+    // that they have a debt.
+    $.("#iou_get_all").click(function(){
+        userName = $("#user").val();
+        passWord = $("#pass").val();
+        action = "iou_get_all";
+        $.get(URL,
+            {username: userName, password: passWord, action: action},
+            function(data,status) {
+                if (status != 'success') {
+                    alert("Status: " + status);
+                } else {
+                    console.log(data.type);
+                    //console.log(data.payload[27].username);
+
+                };
+            })
+    })
+
+    //Beer_data_get
+    // Role: user
+    // Additional parameter: beer_id
+    // Returns all information available in the system for a specified beer. This includes name, price, alcohol
+    // volume, etc. The id of the beer for inquiry is a required additional parameter
+    $.("#beer_data_get").click(function(){
+        userName = $("#user").val();
+        passWord = $("#pass").val();
+        action = "beer_data_get";
+        $.get(URL,
+            {username: userName, password: passWord, action: action},
+            function(data,status) {
+                if (status != 'success') {
+                    alert("Status: " + status);
+                } else {
+                    console.log(data.type);
+                    //console.log(data.payload[27].username);
+
+                };
+            })
+    })
+
+    //User_edit
+    // Role: admin
+    // Additional parameters: new_username, new_password, first_name, last_name, email, phone
+    // Updates user information. All user information is required as additional parameters.
+    $.("#user_edit").click(function(){
+        userName = $("#user").val();
+        passWord = $("#pass").val();
+        action = "user_edit";
+        $.get(URL,
+            {username: userName, password: passWord, action: action},
+            function(data,status) {
+                if (status != 'success') {
+                    alert("Status: " + status);
+                } else {
+                    console.log(data.type);
+                    //console.log(data.payload[27].username);
+
+                };
+            })
+    })
+
+    //User_get_all
+    // Role: admin
+    // Returns all users in the system.
+    $.("#user_get_all").click(function(){
+        userName = $("#user").val();
+        passWord = $("#pass").val();
+        action = "user_get_all";
+        $.get(URL,
+            {username: userName, password: passWord, action: action},
+            function(data,status) {
+                if (status != 'success') {
+                    alert("Status: " + status);
+                } else {
+                    console.log(data.type);
+                    //console.log(data.payload[27].username);
+
+                };
+            })
+    })
+
+    //Inventory_append
+    // Additional parameters: beer_id, amount, price
+    // Updates the number of bottles available in stock and the price for a particular beer. The id of the beer
+    // to be updated is required along with its price and current amount of available bottles.
+    $.("#inventory_append").click(function(){
+        userName = $("#user").val();
+        passWord = $("#pass").val();
+        action = "inventory_append";
+        $.get(URL,
+            {username: userName, password: passWord, action: action},
+            function(data,status) {
+                if (status != 'success') {
+                    alert("Status: " + status);
+                } else {
+                    console.log(data.type);
+                    //console.log(data.payload[27].username);
+
+                };
+            })
+    })
+
+    //{"type" : "error", "payload" : [{"code" : "6","msg" : "Wrong number or type of arguments"}]}
    /* $("button").click(function(){
      //alert("U Klicked Da Buttn..!!!!");
      var data = send("jorass","jorass","inventory_get");

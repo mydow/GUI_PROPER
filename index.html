@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/bootstrap-theme.css">
     <link rel="stylesheet" href="css/sticky_header_footer.css">
+    <link rel="stylesheet" href="css/font-awesome.css">
     <link rel="stylesheet" href="css/site.css">
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
 
@@ -36,22 +37,33 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="404.html">Action</a></li>
-                        <li><a href="404.html">Another action</a></li>
-                        <li><a href="404.html">Something else here</a></li>
+                        <li class="dropdown-header">Customers</li>
+                        <li id="purchaeses_get"><a>Your Purchases</a></li>
+                        <li id="payments_get"><a>Your Payments</a></li>
+                        <li id="iou_get"><a>Your Iou's</a></li>
                         <li role="separator" class="divider"></li>
-                        <li class="dropdown-header">Nav header</li>
-                        <li><a href="404.html">Separated link</a></li>
-                        <li><a href="404.html">One more separated link</a></li>
+                        <li class="dropdown-header">Admin</li>
+                        <!--<li id="inventory_get">Inventory</li>-->
+                        <li id="inventory_get"><a>Inventory</a></li>
+                        <li id="purchases_get_all"><a>All Purchases</a></li>
+                        <li id="payments_get_all"><a>All Payments</a></li>
+                        <li id="iou_get_all"><a>All Iou's</a></li>
+                        <li id="user_edit"><a>Edit User</a></li>
+                        <li id="inventory_append"><a>Update Inventory</a></li>
                     </ul>
                 </li>
             </ul>
-
             <form id="nav-login" class="navbar-form navbar-right">
-                <div id="nav-user">
-                    <p>Logged in as <span id="nav-fullName"></span></p>
+                <div class="form-group">
+                    <div id="nav-user">
+                        <!--<label class="control-label">Welcome <span id="nav-fullName">Guest.</span></label>-->
+                    </div>
                 </div>
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">Login</button>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">Login credentials</button>
+                <!--<div id="nav-user">
+                    <p>Welcome <span id="nav-fullName">Guest.</span></p>
+                </div>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">Login credendtials</button>-->
             </form>
         </div><!--/.nav-collapse -->
     </div>
@@ -63,6 +75,21 @@
         <p>This is a course in how to <strong>not</strong> implement a good User Interface</p>
         <p><a class="btn btn-primary btn-lg" href="http://www.uu.se/en/admissions/master/selma/kursplan/?kpid=30749&type=1" role="button">Learn more</a></p>
     </div>
+
+    <div class="row">
+        <div class="col-xs-1"></div>
+        <div class="col-xs-10">
+            <table class="table table-striped tableSection">
+                <thead id="header_table">
+
+                </thead>
+                <tbody id="insert_table">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-xs-1"></div>
 </div>
 
 <footer class="footer">
@@ -77,7 +104,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Please Login</h4>
+                <h4 class="modal-title" id="myModalLabel">Login credentials</h4>
             </div>
             <div class="modal-body">
                 <div class="row">

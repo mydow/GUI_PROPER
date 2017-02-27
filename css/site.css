@@ -1,3 +1,43 @@
 #nav-user{
     color: white;
 }
+
+/* Fixing the cursor in the meny */
+
+ul.dropdown-menu li  a {
+    cursor: pointer;
+}
+
+/*
+table with fixed headers
+http://stackoverflow.com/questions/17584702/how-to-add-a-scrollbar-to-an-html5-table
+ */
+table.tableSection {
+    display: table;
+    width: 100%;
+}
+
+table.tableSection thead,
+table.tableSection tbody {
+    width: 100%;
+}
+
+table.tableSection thead {
+    overflow-y: scroll;
+    display: table;
+    table-layout: fixed;
+    width: calc(100% - 16px); /* assuming scrollbar width as 16px */
+}
+
+table.tableSection tbody {
+    overflow: auto;
+    height: 150px;
+    display: block;
+}
+
+table.tableSection tr {
+    width: 100%;
+    text-align: left;
+    display: table;
+    table-layout: fixed;
+}

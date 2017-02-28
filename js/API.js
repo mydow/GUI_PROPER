@@ -79,11 +79,11 @@ $(document).ready(function(){
                     var PRICE = data.payload[i].pub_price;
                     var AVAILABLE = data.payload[i].count;
 
-                    console.log(data.payload[i].beer_id);
-                    console.log(length)
+                    //console.log(data.payload[i].beer_id);
+                    //console.log(length)
 
                     if(ID != "" && NAME != "" && AVAILABLE > 0){
-                        html = html + "<tr>" +
+                        html = html + "<tr class='clickable'>" +
                             "<td>"+ ID +"</td>" +
                             "<td>"+ NAME +"</td>" +
                             "<td>"+ PRICE +"</td>" +
@@ -93,6 +93,8 @@ $(document).ready(function(){
                     }
                 }
 
+                var table_title = "Store.";
+
                 var table_head = "<tr>"+
                     "<th><span class='text'>Id</span></th>" +
                     "<th><span class='text'>Name</span></th>" +
@@ -101,8 +103,11 @@ $(document).ready(function(){
                     "<th></th>" +
                     "</tr>"
 
-                document.getElementById("header_table").innerHTML = table_head;
-                document.getElementById("insert_table").innerHTML = html;
+                $("#main_data").load("Partial_View/main_table.html", function(){
+                    document.getElementById("pre_table_header").innerHTML = table_title;
+                    document.getElementById("header_table").innerHTML = table_head;
+                    document.getElementById("insert_table").innerHTML = html;
+                });
             };
         })
 
@@ -151,16 +156,19 @@ $(document).ready(function(){
                             var AVAILABLE = data.payload[i].count;
 
                             if(ID != "" && NAME != ""){
-                                html = html + "<tr>" +
+                                html = html + "<tr class='clickable'>" +
                                     "<td>"+ ID +"</td>" +
                                     "<td>"+ NAME +"</td>" +
                                     "<td>"+ SBL_PRICE +"</td>" +
                                     "<td>"+ PUB_PRICE +"</td>" +
                                     "<td>"+ PRICE +"</td>" +
                                     "<td>"+ AVAILABLE +"</td>" +
+                                    "<td><span class='fa fa-pencil'></span></td>" +
                                     "</tr>"
                             }
                         }
+
+                        var table_title = "Inventory";
 
                         var table_head = "<tr>"+
                             "<th><span class='text'>Id</span></th>" +
@@ -169,11 +177,14 @@ $(document).ready(function(){
                             "<th><span class='text'>pub_Price</span></th>" +
                             "<th><span class='text'>Price</span></th>" +
                             "<th><span class='text'>Available</span></th>" +
-                            "</tr>"
+                            "<th></th>" +
+                            "</tr>";
 
-                        document.getElementById("header_table").innerHTML = table_head;
-
-                        document.getElementById("insert_table").innerHTML = html;
+                        $("#main_data").load("Partial_View/main_table.html", function(){
+                            document.getElementById("pre_table_header").innerHTML = table_title;
+                            document.getElementById("header_table").innerHTML = table_head;
+                            document.getElementById("insert_table").innerHTML = html;
+                        });
                     };
                 })
         }
@@ -183,40 +194,124 @@ $(document).ready(function(){
     // Role: user
     // Gives a list of all purchases made by the specified user
     $("#purchaces_get").click(function(){
-        userName = $("#user").val();
-        passWord = $("#pass").val();
         action = "purchases_get";
-        $.get(URL,
-            {username: userName, password: passWord, action: action},
-            function(data,status) {
-                if (status != 'success') {
-                    alert("Status: " + status);
-                } else {
-                    console.log(data.type);
-                    //console.log(data.payload[27].username);
 
-                };
-            })
+        if(userName == "" && passWord == ""){
+            alert("Please login!");
+        } else {
+            $.get(URL,
+                {username: userName, password: passWord, action: action},
+                function (data, status) {
+                    if (status != 'success') {
+                        alert("Status: " + status);
+                    } else {
+                        //console.log(data.type);
+                        //console.log(data.payload[27].username);
+                        var html = "";
+                        var i = 0;
+                        var length = data.payload.length;
+                        var SUM = 0.00;
+
+                        for(i;i < length; i++){
+
+                            var NAME = data.payload[i].namn;
+                            var PRICE = data.payload[i].price;
+                            var TIME = data.payload[i].timestamp;
+
+                            if(NAME != ""){
+                                html = html + "<tr>" +
+                                    "<td>"+ TIME +"</td>" +
+                                    "<td>"+ NAME +"</td>" +
+                                    "<td>"+ PRICE +"</td>" +
+                                    "</tr>"
+                            }
+
+                            SUM = SUM + parseFloat(PRICE);
+                        }
+
+                        var table_title = "Your purchases.";
+
+                        var table_head = "<tr>"+
+                            "<th><span class='text'>Time</span></th>" +
+                            "<th><span class='text'>Name</span></th>" +
+                            "<th><span class='text'>Price</span></th>" +
+                            "</tr>"
+
+                        var data = "<p>"+ "Total: "+ SUM.toFixed(2) +"</p>"
+
+                        $("#main_data").load("Partial_View/main_table.html", function(){
+                            document.getElementById("pre_table_header").innerHTML = table_title;
+                            document.getElementById("header_table").innerHTML = table_head;
+                            document.getElementById("insert_table").innerHTML = html;
+                            document.getElementById("post_table_data").innerHTML = data;
+                        });
+                    };
+                })
+        }
     })
 
     //Purchases_get_all
     // Role: admin
     // Gives a list of all purchases made by all users
     $("#purchaces_get_all").click(function(){
-        userName = $("#user").val();
-        passWord = $("#pass").val();
         action = "purchases_get_all";
-        $.get(URL,
-            {username: userName, password: passWord, action: action},
-            function(data,status) {
-                if (status != 'success') {
-                    alert("Status: " + status);
-                } else {
-                    console.log(data.type);
-                    //console.log(data.payload[27].username);
+        if(userName == "" && passWord == ""){
+            alert("Please login!");
+        } else{
+            $.get(URL,
+                {username: userName, password: passWord, action: action},
+                function(data,status) {
+                    if (status != 'success') {
+                        alert("Status: " + status);
+                    } else {
+                        //console.log(data.type);
+                        //console.log(data.payload[27].username);
 
-                };
-            })
+                        var length = data.payload.length;
+                        var html = "";
+                        var i = 0;
+
+                        for(i;i<length;i++){
+                            var ADMIN = data.payload[i].admin_username;
+
+                            var NAME = data.payload[i].namn;
+                            var PRICE = data.payload[i].price;
+                            var TIME =   data.payload[i].timestamp;
+                            var USER =   data.payload[i].username;
+                            var FIRST =  data.payload[i].first_name;
+                            var LAST =   data.payload[i].last_name;
+                            var FULL = FIRST + " " + LAST;
+
+                            if(ADMIN != ""){
+                                html = html + "<tr>" +
+                                    "<td>"+ TIME +"</td>" +
+                                    "<td>"+ NAME +"</td>" +
+                                    "<td>"+ PRICE +"</td>" +
+                                    "<td>"+ USER +"</td>" +
+                                    "<td>"+ FULL +"</td>" +
+                                    "</tr>"
+                            }
+                        }
+
+                        var table_title = "Purchases made by customers.";
+
+                        var table_head = "<tr>"+
+                            "<th><span class='text'>Time</span></th>" +
+                            "<th><span class='text'>Name</span></th>" +
+                            "<th><span class='text'>Price</span></th>" +
+                            "<th><span class='text'>Username</span></th>" +
+                            "<th><span class='text'>Fullname</span></th>" +
+                            "</tr>"
+
+                        $("#main_data").load("Partial_View/main_table.html", function(){
+                            document.getElementById("pre_table_header").innerHTML = table_title;
+                            document.getElementById("header_table").innerHTML = table_head;
+                            document.getElementById("insert_table").innerHTML = html;
+                        });
+
+                    };
+                })
+        }
     })
 
     //Purchases_append, should be used when an item is purchased, ie no link
@@ -245,40 +340,124 @@ $(document).ready(function(){
     // Role: user
     // Returns a list of payments made by the specified user
     $("#payments_get").click(function(){
-        userName = $("#user").val();
-        passWord = $("#pass").val();
         action = "payments_get";
-        $.get(URL,
-            {username: userName, password: passWord, action: action},
-            function(data,status) {
-                if (status != 'success') {
-                    alert("Status: " + status);
-                } else {
-                    console.log(data.type);
-                    //console.log(data.payload[27].username);
 
-                };
-            })
+        if(userName == "" && passWord == ""){
+            alert("Please login!");
+        } else {
+            $.get(URL,
+                {username: userName, password: passWord, action: action},
+                function(data,status) {
+                    if (status != 'success') {
+                        alert("Status: " + status);
+                    }  else {
+                        //console.log(data.type);
+                        //console.log(data.payload[27].username);
+                        var html = "";
+                        var i = 0;
+                        var length = data.payload.length;
+                        var SUM = 0.00;
+
+                        for(i;i < length; i++){
+
+                            var USER_ID = data.payload[i].user_id;
+                            var ADMIN_ID= data.payload[i].admin_id;
+
+                            var AMOUNT = data.payload[i].amount;
+                            var TIME = data.payload[i].timestamp;
+
+                            if(USER_ID != "" && ADMIN_ID != ""){
+                                html = html + "<tr>" +
+                                    "<td>"+ TIME +"</td>" +
+                                    "<td>"+ AMOUNT +"</td>" +
+                                    "</tr>"
+                            }
+
+                            SUM = SUM + parseFloat(AMOUNT);
+                        }
+
+                        var table_title = "Your payments.";
+
+                        var table_head = "<tr>"+
+                            "<th><span class='text'>Time</span></th>" +
+                            "<th><span class='text'>Amount</span></th>" +
+                            "</tr>"
+
+                        var data = "<p>"+ "Total: "+ SUM.toFixed(2) +"</p>"
+
+                        $("#main_data").load("Partial_View/main_table.html", function(){
+                            document.getElementById("pre_table_header").innerHTML = table_title;
+                            document.getElementById("header_table").innerHTML = table_head;
+                            document.getElementById("insert_table").innerHTML = html;
+                            document.getElementById("post_table_data").innerHTML = data;
+                        });
+                    };
+                })
+        };
+
+
     })
 
     //Payments_get_all
     // Role: admin
     // Returns a list of payments made by all users.
     $("#payments_get_all").click(function(){
-        userName = $("#user").val();
-        passWord = $("#pass").val();
         action = "payments_get_all";
-        $.get(URL,
-            {username: userName, password: passWord, action: action},
-            function(data,status) {
-                if (status != 'success') {
-                    alert("Status: " + status);
-                } else {
-                    console.log(data.type);
-                    //console.log(data.payload[27].username);
+        if(userName == "" && passWord == ""){
+            alert("Please login!");
+        } else{
+            $.get(URL,
+                {username: userName, password: passWord, action: action},
+                function(data,status) {
+                    if (status != 'success') {
+                        alert("Status: " + status);
+                    } else {
+                        //console.log(data.type);
+                        //console.log(data.payload[27].username);
 
-                };
-            })
+                        var i = 0;
+                        var length = data.payload.length;
+                        var html = "";
+
+                        for(i;i < length; i++){
+                            var ADMIN = data.payload[i].admin_username;
+
+                            var TIME = data.payload[i].timestamp;
+                            var AMOUNT = data.payload[i].amount;
+                            var USER = data.payload[i].username;
+                            var FIRST = data.payload[i].first_name;
+                            var LAST = data.payload[i].last_name;
+
+                            var FULL = FIRST + " " + LAST;
+
+                            if(ADMIN != ""){
+                                html = html + "<tr>" +
+                                    "<td>"+ TIME +"</td>" +
+                                    "<td>"+ AMOUNT +"</td>" +
+                                    "<td>"+ USER +"</td>" +
+                                    "<td>"+ FULL +"</td>" +
+                                    "</tr>"
+                            }
+                        }
+
+                        var table_title = "Payments by customers.";
+
+                        var table_head = "<tr>"+
+                            "<th><span class='text'>Time</span></th>" +
+                            "<th><span class='text'>Amount</span></th>" +
+                            "<th><span class='text'>Username</span></th>" +
+                            "<th><span class='text'>Name</span></th>" +
+                            "</tr>"
+
+                        $("#main_data").load("Partial_View/main_table.html", function(){
+                            document.getElementById("pre_table_header").innerHTML = table_title;
+                            document.getElementById("header_table").innerHTML = table_head;
+                            document.getElementById("insert_table").innerHTML = html;
+                        });
+
+                    };
+                })
+        }
     })
 
     //Payments_append: should be used when an item is payed for, ie no link
@@ -307,21 +486,39 @@ $(document).ready(function(){
     // Role: user
     // Returns the total amount that the specified user has at his disposal for buying beer. A negative balance
     // means that the user has a debt.
+    // {"type" : "iou_get", "payload" : [{"user_id" : "2","first_name" : "Jory","last_name" : "Assies","assets" : "-275"}]}
     $("#iou_get").click(function(){
-        userName = $("#user").val();
-        passWord = $("#pass").val();
         action = "iou_get";
-        $.get(URL,
-            {username: userName, password: passWord, action: action},
-            function(data,status) {
-                if (status != 'success') {
-                    alert("Status: " + status);
-                } else {
-                    console.log(data.type);
-                    //console.log(data.payload[27].username);
 
-                };
-            })
+        if(userName == "" && passWord == ""){
+            alert("Please login!");
+        } else{
+            $.get(URL,
+                {username: userName, password: passWord, action: action},
+                function(data,status) {
+                    if (status != 'success') {
+                        alert("Status: " + status);
+                    } else {
+                        //console.log(data.type);
+                        //console.log(data.payload[27].username);
+                        var FIRSTNAME = data.payload[0].first_name;
+                        var LASTNAME = data.payload[0].last_name;
+                        var ASSETS = data.payload[0].assets;
+
+                        var FULLNAME = FIRSTNAME + " " + LASTNAME;
+
+                        var DATA = "<div class='row'>" +
+                            "<p>"+ "Your debt is: "+ ASSETS +"</p>"
+                            + "</div>"
+
+                        $('#myModal').modal('show')
+                        $("#login").hide();
+
+                        document.getElementById("myModalLabel").innerHTML = FULLNAME;
+                        document.getElementById("modal-body").innerHTML = DATA;
+                    };
+                })
+        }
     })
 
     //Iou_get_all
@@ -329,20 +526,59 @@ $(document).ready(function(){
     // Returns all users and amounts they have at their disposal. For users with a negative balance it means
     // that they have a debt.
     $("#iou_get_all").click(function(){
-        userName = $("#user").val();
-        passWord = $("#pass").val();
         action = "iou_get_all";
-        $.get(URL,
-            {username: userName, password: passWord, action: action},
-            function(data,status) {
-                if (status != 'success') {
-                    alert("Status: " + status);
-                } else {
-                    console.log(data.type);
-                    //console.log(data.payload[27].username);
 
-                };
-            })
+        if(userName == "" && passWord == ""){
+            alert("Please login!");
+        } else{
+            $.get(URL,
+                {username: userName, password: passWord, action: action},
+                function(data,status) {
+                    if (status != 'success') {
+                        alert("Status: " + status);
+                    } else {
+                        //console.log(data.type);
+                        //console.log(data.payload[27].username);
+
+                        var html = "";
+                        var i = 0;
+                        var length = data.payload.length;
+
+                        for(i; i < length; i++){
+                            var USER = data.payload[i].username;
+                            var FIRST = data.payload[i].first_name;
+                            var LAST = data.payload[i].last_name;
+                            var ASSETS = data.payload[i].assets
+
+                            if(USER != ""){
+                                html = html + "<tr>" +
+                                    "<td>"+ USER +"</td>" +
+                                    "<td>"+ FIRST +"</td>" +
+                                    "<td>"+ LAST +"</td>" +
+                                    "<td>"+ ASSETS +"</td>" +
+                                    "</tr>"
+                            }
+
+                        }
+
+                        var table_title = "Customers in debt.";
+
+                        var table_head = "<tr>"+
+                            "<th><span class='text'>Username</span></th>" +
+                            "<th><span class='text'>First name</span></th>" +
+                            "<th><span class='text'>Last name</span></th>" +
+                            "<th><span class='text'>Amount</span></th>" +
+                            "</tr>"
+
+                        $("#main_data").load("Partial_View/main_table.html", function(){
+                            document.getElementById("pre_table_header").innerHTML = table_title;
+                            document.getElementById("header_table").innerHTML = table_head;
+                            document.getElementById("insert_table").innerHTML = html;
+                        });
+
+                    };
+                })
+        }
     })
 
     //Beer_data_get: should be used when information about beer is needed, ie no link
@@ -354,17 +590,21 @@ $(document).ready(function(){
         userName = $("#user").val();
         passWord = $("#pass").val();
         action = "beer_data_get";
-        $.get(URL,
-            {username: userName, password: passWord, action: action},
-            function(data,status) {
-                if (status != 'success') {
-                    alert("Status: " + status);
-                } else {
-                    console.log(data.type);
-                    //console.log(data.payload[27].username);
+        if(userName == "" && passWord == ""){
+            alert("Please login!");
+        } else{
+            $.get(URL,
+                {username: userName, password: passWord, action: action},
+                function(data,status) {
+                    if (status != 'success') {
+                        alert("Status: " + status);
+                    } else {
+                        console.log(data.type);
+                        //console.log(data.payload[27].username);
 
-                };
-            })
+                    };
+                })
+        }
     })
 
     //User_edit
@@ -395,17 +635,21 @@ $(document).ready(function(){
         userName = $("#user").val();
         passWord = $("#pass").val();
         action = "user_get_all";
-        $.get(URL,
-            {username: userName, password: passWord, action: action},
-            function(data,status) {
-                if (status != 'success') {
-                    alert("Status: " + status);
-                } else {
-                    console.log(data.type);
-                    //console.log(data.payload[27].username);
+        if(userName == "" && passWord == ""){
+            alert("Please login!");
+        } else{
+            $.get(URL,
+                {username: userName, password: passWord, action: action},
+                function(data,status) {
+                    if (status != 'success') {
+                        alert("Status: " + status);
+                    } else {
+                        console.log(data.type);
+                        //console.log(data.payload[27].username);
 
-                };
-            })
+                    };
+                })
+        }
     })
 
     //Inventory_append

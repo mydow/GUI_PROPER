@@ -3,6 +3,8 @@
  */
 /** A wrapper class for the api **/
 
+/** DEPRECATED, added all functions in this file to main.js instead **/
+
 $(document).ready(function(){
 
     var URL = "http://pub.jamaica-inn.net/fpdb/api.php";

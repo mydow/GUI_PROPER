@@ -8,20 +8,72 @@ $(document).ready(function(){
     var adminLogin = "user_get_all";
     var adminInventory = "inventory_get";
 
+    var userId = "123456";
     var userName = "";
     var passWord = "";
     var action = "";
     var firstName = "";
     var lastName = "";
 
-    $("#login").click(function(){
-        alert("You actually cant login proper. The API does not support it."+
-            "\nWe just store the what the user enters in the input fields and"+
-            "\nchecks if the user is valid on each call to the DB.");
-        userName = $("#user").val();
-        passWord = $("#pass").val();
+    $("#store").click(function(){
+        $(this).addClass('active').siblings().removeClass('active');
 
-        $('#myModal').modal('hide')
+        $.get(URL,
+            {username: adminUser, password: adminPass, action: adminInventory},
+            function(data,status) {
+                if (status != 'success') {
+                    alert("Status: " + status);
+                } else {
+                    var length = data.payload.length;
+                    var i = 0;
+                    var html = "";
+
+                    for(i;i<length;i++){
+
+                        var ID = data.payload[i].beer_id;
+                        var NAME = data.payload[i].namn;
+                        var PRICE = parseFloat(data.payload[i].pub_price).toFixed(2);
+                        var AVAILABLE = data.payload[i].count;
+
+                        //console.log(data.payload[i].beer_id);
+                        //console.log(length)
+
+                        if(ID != "" && NAME != "" && AVAILABLE > 0){
+                            html = html + "<tr class='clickable'>" +
+                                "<td>"+ ID +"</td>" +
+                                "<td>"+ NAME +"</td>" +
+                                "<td>"+ PRICE +"</td>" +
+                                "<td>"+ AVAILABLE +"</td>" +
+                                "<td>" +
+                                "<span class='beer-info icon-margin fa fa-info'>&nbsp</span>" +
+                                "<button class='buy-btn btn btn-success btn-sm'>Buy</button>" +
+                                "</td>" +
+                                "</tr>"
+                        }
+                    }
+
+                    var table_title = "Store";
+
+                    var table_head = "<tr>"+
+                        "<th><span class='text'>Art. Nr</span></th>" +
+                        "<th><span class='text'>Name</span></th>" +
+                        "<th><span class='text'>Price</span></th>" +
+                        "<th><span class='text'>Available</span></th>" +
+                        "<th></th>" +
+                        "</tr>"
+
+                    $("#main_data").load("Partial_View/main_table.html", function(){
+                        document.getElementById("pre_table_header").innerHTML = table_title;
+                        document.getElementById("header_table").innerHTML = table_head;
+                        document.getElementById("insert_table").innerHTML = html;
+                    });
+                };
+            })
+
+    })
+
+    $("#nav-cart").click(function(){
+        alert("CART");
     })
 
     /* USER SPECIFIC */
@@ -30,6 +82,7 @@ $(document).ready(function(){
     // Role: user
     // Gives a list of all purchases made by the specified user
     $("#purchaces_get").click(function(){
+
         action = "purchases_get";
 
         if(userName == "" && passWord == ""){
@@ -258,14 +311,7 @@ $(document).ready(function(){
     // Gives a list of all drinks available in the system.
     // Example: {"namn" : "Anchor Steam Beer","namn2" : "","sbl_price" : "23.90","pub_price" : "25","beer_id" : "157503","count" : "10","price" : "20.60"},
     $("#inventory_get").click(function(){
-
-        //userName = adminUser;
-        //passWord = adminPass;
-
         action = "inventory_get";
-
-        var html = "";
-        var i = 0;
 
         if(userName == "" && passWord == ""){
             alert("Please login!");
@@ -277,7 +323,10 @@ $(document).ready(function(){
                         alert("Status: " + status);
                     } else {
 
+                        var html = "";
+                        var i = 0;
                         var length = data.payload.length;
+
                         for(i;i<length;i++){
 
                             var ID = data.payload[i].beer_id;
@@ -508,6 +557,67 @@ $(document).ready(function(){
         }
     })
 
+    //User_get_all
+    // Role: admin
+    // Returns all users in the system.
+    $("#user_get_all").click(function(){
+        action = "user_get_all";
+        if(userName == "" && passWord == ""){
+            alert("Please login!");
+        } else{
+            $.get(URL,
+                {username: userName, password: passWord, action: action},
+                function(data,status) {
+                    if (status != 'success') {
+                        alert("Status: " + status);
+                    } else {
+                        //console.log(data.type);
+                        //console.log(data.payload[27].username);
+
+                        var i = 0;
+                        var html = "";
+                        var length = data.payload.length;
+
+                        for(i; i < length; i++){
+                            var USERNAME = data.payload[i].username;
+                            var FIRST_NAME = data.payload[i].first_name;
+                            var LAST_NAME = data.payload[i].last_name;
+                            var EMAIL = data.payload[i].email;
+                            var PHONE = data.payload[i].phone;
+
+                            if(USERNAME != ""){
+                                html = html + "<tr>" +
+                                    "<td>"+ USERNAME +"</td>" +
+                                    "<td>"+ FIRST_NAME +"</td>" +
+                                    "<td>"+ LAST_NAME +"</td>" +
+                                    "<td>"+ EMAIL +"</td>" +
+                                    "<td>"+ PHONE +"</td>" +
+                                    "<td><span class='fa fa-pencil' title='Edit'></span></td>" +
+                                    "</tr>"
+                            }
+                        }
+
+                        var table_title = "All members";
+
+                        var table_head = "<tr>"+
+                            "<th><span class='text'>Username</span></th>" +
+                            "<th><span class='text'>First name</span></th>" +
+                            "<th><span class='text'>Last name</span></th>" +
+                            "<th><span class='text'>Email</span></th>" +
+                            "<th><span class='text'>Phone</span></th>" +
+                            "<th></th>" +
+                            "</tr>"
+
+                        $("#main_data").load("Partial_View/main_table.html", function(){
+                            document.getElementById("pre_table_header").innerHTML = table_title;
+                            document.getElementById("header_table").innerHTML = table_head;
+                            document.getElementById("insert_table").innerHTML = html;
+                        });
+                    };
+                })
+        }
+    })
+
     //User_edit
     // Role: admin
     // Additional parameters: new_username, new_password, first_name, last_name, email, phone
@@ -527,27 +637,6 @@ $(document).ready(function(){
             })
     })
 
-    //User_get_all
-    // Role: admin
-    // Returns all users in the system.
-    $("#user_get_all").click(function(){
-        action = "user_get_all";
-        if(userName == "" && passWord == ""){
-            alert("Please login!");
-        } else{
-            $.get(URL,
-                {username: userName, password: passWord, action: action},
-                function(data,status) {
-                    if (status != 'success') {
-                        alert("Status: " + status);
-                    } else {
-                        console.log(data.type);
-                        //console.log(data.payload[27].username);
-
-                    };
-                })
-        }
-    })
 
     //Inventory_append
     // Additional parameters: beer_id, amount, price
@@ -574,14 +663,66 @@ $(document).ready(function(){
 
     $("#main_data").load("Partial_View/index2.html");
 
+    $("#login").click(function(){
+        alert("You actually cant login proper. The API does not support it."+
+            "\nWe just store the what the user enters in the input fields and"+
+            "\nchecks if the user is valid on each call to the DB.");
+        userName = $("#user").val();
+        passWord = $("#pass").val();
+
+        $('#myModal').modal('hide')
+    })
+
+    $("#home").click(function(){
+        $("#main_data").load("Partial_View/index2.html");
+        $(this).addClass('active').siblings().removeClass('active');
+    })
+
+    $("#about").click(function(){
+        $("#main_data").load("404.html");
+        $(this).addClass('active').siblings().removeClass('active');
+    })
+
+    $("#contact").click(function(){
+        $("#main_data").load("404.html");
+        $(this).addClass('active').siblings().removeClass('active');
+    })
+
+    $(document).on('click','.buy-btn', function(event){
+        var row = $(this).closest("tr") // get current row
+
+        var beer_id=row.find("td:eq(0)").text(); // get current row 1st TD value
+        var beer_name=row.find("td:eq(1)").text(); // get current row 2st TD value
+        var beer_price=row.find("td:eq(2)").text(); // get current row 3st TD value
+
+        var cart_item = new item(beer_id,beer_name,beer_price,1);
+
+        addItem(cart_item);
+
+        var cartLength = items.length;
+        var totalSum = calculateTotalSum(items)
+
+        document.getElementById("cart_items").innerHTML = cartLength;
+        $("#cart_input").val(totalSum);
+
+    })
+
+    $(document).on('click','.beer-info', function(event){
+        var row = $(this).closest("tr") // get current row
+
+        var beer_id=row.find("td:eq(0)").text(); // get current row 1st TD value
+
+        console.log(beer_id);
+    })
+
     var d = new Date();
 
     document.getElementById("today").innerHTML = d;
 
+    $("#cart_input").val(0);
+
     /*$('#insert_table').on('click','.clickable', function(event) {
         $(this).addClass('selected').siblings().removeClass('selected');
     });*/
-
-
 
 })

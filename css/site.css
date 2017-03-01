@@ -1,11 +1,35 @@
-#nav-user{
+/* set color on cart labels */
+
+#nav-cart{
     color: white;
 }
 
-/* Fixing the cursor in the meny */
+/* Setting the cursors */
 
-ul.dropdown-menu li  a {
+/* dropdown corsor */
+ul li  a {
     cursor: pointer;
+}
+
+/* cart-input cursor */
+#cart_input{
+    cursor: not-allowed;
+}
+
+/* information cursor in the store */
+.beer-info{
+    cursor: pointer;
+}
+
+/* END Setting the cursors END */
+
+/* set background color for table rows */
+.selected {
+    background-color: #5cb85c;
+}
+
+.icon-margin{
+    margin-right: 5px;
 }
 
 /*
@@ -31,7 +55,8 @@ table.tableSection thead {
 
 table.tableSection tbody {
     overflow: auto;
-    height: 150px;
+    /*height: 150px;*/
+    height: 325px;
     display: block;
 }
 
@@ -40,8 +65,4 @@ table.tableSection tr {
     text-align: left;
     display: table;
     table-layout: fixed;
-}
-
-.selected {
-    background-color: #5cb85c;
 }

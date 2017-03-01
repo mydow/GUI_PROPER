@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/main.css">
+    <!--<link rel="stylesheet" href="css/main.css">-->
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/bootstrap-theme.css">
     <link rel="stylesheet" href="css/sticky_header_footer.css">
@@ -27,22 +27,24 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">MosEisley Cantina</a>
+            <a class="navbar-brand" href="index.html">MosEisley Cantina</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="404.html">About</a></li>
-                <li><a href="404.html">Contact</a></li>
+                <li id="home" class="active"><a href="#">Home</a></li>
+                <li id="store"><a>Store</a></li>
+                <li id="about"><a>About</a></li>
+                <li id="contact"><a>Contact</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-header">Customers</li>
-                        <li id="purchaces_get"><a>Your Purchases</a></li>
-                        <li id="payments_get"><a>Your Payments</a></li>
-                        <li id="iou_get"><a>Your Iou's</a></li>
+                        <li id="purchaces_get"><a>My Purchases</a></li>
+                        <li id="payments_get"><a>My Payments</a></li>
+                        <li id="iou_get"><a>My Iou's</a></li>
                         <li role="separator" class="divider"></li>
                         <li class="dropdown-header">Admin</li>
+                        <li id="user_get_all"><a>Members</a></li>
                         <li id="inventory_get"><a>Inventory</a></li>
                         <li id="purchaces_get_all"><a>All Purchases</a></li>
                         <li id="payments_get_all"><a>All Payments</a></li>
@@ -50,17 +52,16 @@
                     </ul>
                 </li>
             </ul>
-            <form id="nav-login" class="navbar-form navbar-right">
+
+            <button type="button" class="btn btn-success navbar-right navbar-btn" data-toggle="modal" data-target="#myModal">Login credentials</button>
+
+            <form id="nav-cart" class="navbar-form navbar-right">
                 <div class="form-group">
-                    <div id="nav-user">
-                        <!--<label class="control-label">Welcome <span id="nav-fullName">Guest.</span></label>-->
-                    </div>
+                    <label class="control-label"><span class="fa fa-shopping-cart"></span> Items:
+                    <span id="cart_items" class="badge">0</span>
+                    </label>
+                    <input id="cart_input" class="form-control disabled" placeholder="0">
                 </div>
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">Login credentials</button>
-                <!--<div id="nav-user">
-                    <p>Welcome <span id="nav-fullName">Guest.</span></p>
-                </div>
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">Login credendtials</button>-->
             </form>
         </div><!--/.nav-collapse -->
     </div>
@@ -114,6 +115,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
 <script src="js/plugins.js"></script>
+<script src="js/shopping_cart.js"></script>
 <script src="js/main.js"></script>
 <!--<script src="js/API.js"></script>-->
 <script src="js/bootstrap.js"></script>

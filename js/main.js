@@ -15,6 +15,15 @@ $(document).ready(function(){
     var firstName = "";
     var lastName = "";
 
+    var GB = "";
+    var SE = "";
+
+    var d = new Date();
+
+    document.getElementById("today").innerHTML = d;
+
+    $("#cart_input").val(0);
+
     $("#store").click(function(){
         $(this).addClass('active').siblings().removeClass('active');
 
@@ -52,15 +61,29 @@ $(document).ready(function(){
                         }
                     }
 
-                    var table_title = "Store";
+                    if(GB){
+                        var table_title = "Store";
 
-                    var table_head = "<tr>"+
-                        "<th><span class='text'>Art. Nr</span></th>" +
-                        "<th><span class='text'>Name</span></th>" +
-                        "<th><span class='text'>Price</span></th>" +
-                        "<th><span class='text'>Available</span></th>" +
-                        "<th></th>" +
-                        "</tr>"
+                        var table_head = "<tr>"+
+                            "<th><span id='store-id' class='text'>Art. Nr</span></th>" +
+                            "<th><span id='store-name' class='text'>Name</span></th>" +
+                            "<th><span id='store-price' class='text'>Price</span></th>" +
+                            "<th><span id='store-available' class='text'>Available</span></th>" +
+                            "<th></th>" +
+                            "</tr>"
+                    } else {
+                        var table_title = "Shop";
+
+                        var table_head = "<tr>"+
+                            "<th><span id='store-id' class='text'>Art. Nr</span></th>" +
+                            "<th><span id='store-name' class='text'>Namn</span></th>" +
+                            "<th><span id='store-price' class='text'>Pris</span></th>" +
+                            "<th><span id='store-available' class='text'>Antal</span></th>" +
+                            "<th></th>" +
+                            "</tr>"
+                    }
+
+
 
                     $("#main_data").load("Partial_View/main_table.html", function(){
                         document.getElementById("pre_table_header").innerHTML = table_title;
@@ -70,10 +93,6 @@ $(document).ready(function(){
                 };
             })
 
-    })
-
-    $("#nav-cart").click(function(){
-        alert("CART");
     })
 
     /* USER SPECIFIC */
@@ -118,15 +137,29 @@ $(document).ready(function(){
                             SUM = SUM + parseFloat(PRICE);
                         }
 
-                        var table_title = "Your purchases.";
+                        if(GB){
+                            var table_title = "Your purchases";
 
-                        var table_head = "<tr>"+
-                            "<th><span class='text'>Time</span></th>" +
-                            "<th><span class='text'>Name</span></th>" +
-                            "<th><span class='text'>Price</span></th>" +
-                            "</tr>"
+                            var table_head = "<tr>"+
+                                "<th><span id='purchaces_get_time' class='text'>Time</idspan></th>" +
+                                "<th><span id='purchaces_get_name' class='text'>Name</span></th>" +
+                                "<th><span id='purchaces_get_price' class='text'>Price</span></th>" +
+                                "</tr>"
 
-                        var data = "<p>"+ "Total: "+ SUM.toFixed(2) +"</p>"
+                            var data = "<p id='purchase-total'>"+ "Total: "+ "</p>" + "<p>" + SUM.toFixed(2) +"</p>"
+                        } else {
+                            var table_title = "Dina inköp";
+
+                            var table_head = "<tr>"+
+                                "<th><span id='purchaces_get_time' class='text'>Tid</span></th>" +
+                                "<th><span id='purchaces_get_name' class='text'>Namn</span></th>" +
+                                "<th><span id='purchaces_get_price' class='text'>Pris</span></th>" +
+                                "</tr>"
+
+                            var data = "<p id='purchase-total'>"+ "Summa: "+ SUM.toFixed(2) +"</p>"
+                        }
+
+
 
                         $("#main_data").load("Partial_View/main_table.html", function(){
                             document.getElementById("pre_table_header").innerHTML = table_title;
@@ -179,14 +212,26 @@ $(document).ready(function(){
                             SUM = SUM + parseFloat(AMOUNT);
                         }
 
-                        var table_title = "Your payments.";
+                        if(GB){
+                            var table_title = "Your payments.";
 
-                        var table_head = "<tr>"+
-                            "<th><span class='text'>Time</span></th>" +
-                            "<th><span class='text'>Amount</span></th>" +
-                            "</tr>"
+                            var table_head = "<tr>"+
+                                "<th><span id='payments_get_time' class='text'>Time</span></th>" +
+                                "<th><span id='payments_get_amount' class='text'>Amount</span></th>" +
+                                "</tr>"
 
-                        var data = "<p>"+ "Total: "+ SUM.toFixed(2) +"</p>"
+                            var data = "<p id='payments_get_total'>"+ "Total: "+ "</p><p>" + SUM.toFixed(2) +"</p>"
+                        } else {
+                            var table_title = "Dina Betalningar";
+
+                            var table_head = "<tr>"+
+                                "<th><span id='payments_get_time' class='text'>Tid</span></th>" +
+                                "<th><span id='payments_get_amount' class='text'>Summa</span></th>" +
+                                "</tr>"
+
+                            var data = "<p id='payments_get_total'>"+ "Summa: "+ "</p><p>" + SUM.toFixed(2) +"</p>"
+                        }
+
 
                         $("#main_data").load("Partial_View/main_table.html", function(){
                             document.getElementById("pre_table_header").innerHTML = table_title;
@@ -224,9 +269,15 @@ $(document).ready(function(){
 
                         var FULLNAME = FIRSTNAME + " " + LASTNAME;
 
-                        var DATA = "<div class='row'>" +
-                            "<p>"+ "Your debt is: "+ ASSETS +"</p>"
-                            + "</div>"
+                        if(GB){
+                            var DATA = "<div class='row'>" +
+                                "<p>"+ "Your debt is: "+ ASSETS +"</p>"
+                                + "</div>"
+                        } else {
+                            var DATA = "<div class='row'>" +
+                                "<p>"+ "Din skuld är: "+ ASSETS +"</p>"
+                                + "</div>"
+                        }
 
                         $('#myModal').modal('show')
                         $("#login").hide();
@@ -349,17 +400,31 @@ $(document).ready(function(){
                             }
                         }
 
-                        var table_title = "Inventory";
+                        if(GB){
+                            var table_title = "Inventory";
 
-                        var table_head = "<tr>"+
-                            "<th><span class='text'>Id</span></th>" +
-                            "<th><span class='text'>Name</span></th>" +
-                            "<th><span class='text'>sbl_Price</span></th>" +
-                            "<th><span class='text'>pub_Price</span></th>" +
-                            "<th><span class='text'>Price</span></th>" +
-                            "<th><span class='text'>Available</span></th>" +
-                            "<th></th>" +
-                            "</tr>";
+                            var table_head = "<tr>"+
+                                "<th><span id='inventory_get_id' class='text'>Id</span></th>" +
+                                "<th><span id='inventory_get_name' class='text'>Name</span></th>" +
+                                "<th><span id='inventory_get_sbl_price' class='text'>sbl_Price</span></th>" +
+                                "<th><span id='inventory_get_pub_price' class='text'>pub_Price</span></th>" +
+                                "<th><span id='inventory_get_price' class='text'>Price</span></th>" +
+                                "<th><span id='inventory_get_available' class='text'>Available</span></th>" +
+                                "<th></th>" +
+                                "</tr>";
+                        } else {
+                            var table_title = "Inventarie";
+
+                            var table_head = "<tr>"+
+                                "<th><span id='inventory_get_id' class='text'>Id</span></th>" +
+                                "<th><span id='inventory_get_name' class='text'>Namn</span></th>" +
+                                "<th><span id='inventory_get_sbl_price' class='text'>sbl_Pris</span></th>" +
+                                "<th><span id='inventory_get_pub_price' class='text'>pub_Pris</span></th>" +
+                                "<th><span id='inventory_get_price' class='text'>Pris</span></th>" +
+                                "<th><span id='inventory_get_available' class='text'>Antal</span></th>" +
+                                "<th></th>" +
+                                "</tr>";
+                        }
 
                         $("#main_data").load("Partial_View/main_table.html", function(){
                             document.getElementById("pre_table_header").innerHTML = table_title;
@@ -397,10 +462,10 @@ $(document).ready(function(){
 
                             var NAME = data.payload[i].namn;
                             var PRICE = data.payload[i].price;
-                            var TIME =   data.payload[i].timestamp;
-                            var USER =   data.payload[i].username;
-                            var FIRST =  data.payload[i].first_name;
-                            var LAST =   data.payload[i].last_name;
+                            var TIME = data.payload[i].timestamp;
+                            var USER = data.payload[i].username;
+                            var FIRST = data.payload[i].first_name;
+                            var LAST = data.payload[i].last_name;
                             var FULL = FIRST + " " + LAST;
 
                             if(ADMIN != ""){
@@ -414,15 +479,27 @@ $(document).ready(function(){
                             }
                         }
 
-                        var table_title = "Purchases made by customers.";
+                        if(GB){
+                            var table_title = "Purchases made by customers";
 
-                        var table_head = "<tr>"+
-                            "<th><span class='text'>Time</span></th>" +
-                            "<th><span class='text'>Name</span></th>" +
-                            "<th><span class='text'>Price</span></th>" +
-                            "<th><span class='text'>Username</span></th>" +
-                            "<th><span class='text'>Fullname</span></th>" +
-                            "</tr>"
+                            var table_head = "<tr>"+
+                                "<th><span id='purchases_get_all_time' class='text'>Time</span></th>" +
+                                "<th><span id='purchases_get_all_name' class='text'>Name</span></th>" +
+                                "<th><span id='purchases_get_all_price' class='text'>Price</span></th>" +
+                                "<th><span id='purchases_get_all_username' class='text'>Username</span></th>" +
+                                "<th><span id='purchases_get_all_fullname' class='text'>Fullname</span></th>" +
+                                "</tr>"
+                        } else {
+                            var table_title = "Kund underlag";
+
+                            var table_head = "<tr>"+
+                                "<th><span id='purchases_get_all_time' class='text'>Tid</span></th>" +
+                                "<th><span id='purchases_get_all_name' class='text'>Namn</span></th>" +
+                                "<th><span id='purchases_get_all_price' class='text'>Pris</span></th>" +
+                                "<th><span id='purchases_get_all_username' class='text'>Användarnamn</span></th>" +
+                                "<th><span id='purchases_get_all_fullname' class='text'>Namn</span></th>" +
+                                "</tr>"
+                        }
 
                         $("#main_data").load("Partial_View/main_table.html", function(){
                             document.getElementById("pre_table_header").innerHTML = table_title;
@@ -477,14 +554,26 @@ $(document).ready(function(){
                             }
                         }
 
-                        var table_title = "Payments by customers.";
+                        if(GB){
+                            var table_title = "Payments by customers";
 
-                        var table_head = "<tr>"+
-                            "<th><span class='text'>Time</span></th>" +
-                            "<th><span class='text'>Amount</span></th>" +
-                            "<th><span class='text'>Username</span></th>" +
-                            "<th><span class='text'>Name</span></th>" +
-                            "</tr>"
+                            var table_head = "<tr>"+
+                                "<th><span id='payments_get_all_time' class='text'>Time</span></th>" +
+                                "<th><span id='payments_get_all_amount' class='text'>Amount</span></th>" +
+                                "<th><span id='payments_get_all_username' class='text'>Username</span></th>" +
+                                "<th><span id='payments_get_all_name' class='text'>Name</span></th>" +
+                                "</tr>"
+                        } else {
+                            var table_title = "Inbetalningar";
+
+                            var table_head = "<tr>"+
+                                "<th><span id='payments_get_all_time' class='text'>Tid</span></th>" +
+                                "<th><span id='payments_get_all_amount' class='text'>Summa</span></th>" +
+                                "<th><span id='payments_get_all_username' class='text'>Andvändarnamn</span></th>" +
+                                "<th><span id='payments_get_all_name' class='text'>Namn</span></th>" +
+                                "</tr>"
+                        }
+
 
                         $("#main_data").load("Partial_View/main_table.html", function(){
                             document.getElementById("pre_table_header").innerHTML = table_title;
@@ -537,14 +626,25 @@ $(document).ready(function(){
 
                         }
 
-                        var table_title = "Customers in debt.";
+                        if(GB){
+                            var table_title = "Customers in debt.";
 
-                        var table_head = "<tr>"+
-                            "<th><span class='text'>Username</span></th>" +
-                            "<th><span class='text'>First name</span></th>" +
-                            "<th><span class='text'>Last name</span></th>" +
-                            "<th><span class='text'>Amount</span></th>" +
-                            "</tr>"
+                            var table_head = "<tr>"+
+                                "<th><span id='iou_get_all_username' class='text'>Username</span></th>" +
+                                "<th><span id='iou_get_all_firstname' class='text'>First name</span></th>" +
+                                "<th><span id='iou_get_all_lastname' class='text'>Last name</span></th>" +
+                                "<th><span id='iou_get_all_amount' class='text'>Amount</span></th>" +
+                                "</tr>"
+                        } else {
+                            var table_title = "Skulder";
+
+                            var table_head = "<tr>"+
+                                "<th><span id='iou_get_all_username' class='text'>Användar</span></th>" +
+                                "<th><span id='iou_get_all_firstname' class='text'>Förnamn</span></th>" +
+                                "<th><span id='iou_get_all_lastname' class='text'>Efernamn</span></th>" +
+                                "<th><span id='iou_get_all_amount' class='text'>Summa</span></th>" +
+                                "</tr>"
+                        }
 
                         $("#main_data").load("Partial_View/main_table.html", function(){
                             document.getElementById("pre_table_header").innerHTML = table_title;
@@ -597,16 +697,30 @@ $(document).ready(function(){
                             }
                         }
 
-                        var table_title = "All members";
+                        if(GB){
+                            var table_title = "All members";
 
-                        var table_head = "<tr>"+
-                            "<th><span class='text'>Username</span></th>" +
-                            "<th><span class='text'>First name</span></th>" +
-                            "<th><span class='text'>Last name</span></th>" +
-                            "<th><span class='text'>Email</span></th>" +
-                            "<th><span class='text'>Phone</span></th>" +
-                            "<th></th>" +
-                            "</tr>"
+                            var table_head = "<tr>"+
+                                "<th><span id='user_get_all_usernamn' class='text'>Username</span></th>" +
+                                "<th><span id='user_get_all_firstname' class='text'>First name</span></th>" +
+                                "<th><span id='user_get_all_lastname' class='text'>Last name</span></th>" +
+                                "<th><span id='user_get_all_email' class='text'>Email</span></th>" +
+                                "<th><span id='user_get_all_phone' class='text'>Phone</span></th>" +
+                                "<th></th>" +
+                                "</tr>"
+                        } else {
+                            var table_title = "Alla medlemmar";
+
+                            var table_head = "<tr>"+
+                                "<th><span id='user_get_all_usernamn' class='text'>Användarnamn</span></th>" +
+                                "<th><span id='user_get_all_firstname' class='text'>Förnamn</span></th>" +
+                                "<th><span id='user_get_all_lastname' class='text'>Efternamn</span></th>" +
+                                "<th><span id='user_get_all_email' class='text'>Email</span></th>" +
+                                "<th><span id='user_get_all_phone' class='text'>Telefon</span></th>" +
+                                "<th></th>" +
+                                "</tr>"
+                        }
+
 
                         $("#main_data").load("Partial_View/main_table.html", function(){
                             document.getElementById("pre_table_header").innerHTML = table_title;
@@ -661,6 +775,8 @@ $(document).ready(function(){
 
     /* !!!API WRAPPER FUNCTIONS END!!! */
 
+    $("#checkout").hide();
+
     $("#main_data").load("Partial_View/index2.html");
 
     $("#login").click(function(){
@@ -674,8 +790,25 @@ $(document).ready(function(){
     })
 
     $("#home").click(function(){
-        $("#main_data").load("Partial_View/index2.html");
+        var html = "";
+        //$("#main_data").load("Partial_View/index2.html");
         $(this).addClass('active').siblings().removeClass('active');
+
+        if(GB){
+            html = "<h1>User Interface Programming!</h1>";
+        }else{
+            html = "<h1>Gränssnitts Programmering!</h1>";
+        }
+
+        html = html +
+            "<p>" +
+            "<a class='btn btn-primary btn-lg' href='http://www.uu.se/en/admissions/master/selma/kursplan/?kpid=30749&type=1' role='button'>Learn more</a>" +
+            "</p>";
+
+        $("#main_data").load("Partial_View/index2.html", function(){
+            document.getElementById("jumbotron").innerHTML = html;
+        });
+
     })
 
     $("#about").click(function(){
@@ -686,6 +819,263 @@ $(document).ready(function(){
     $("#contact").click(function(){
         $("#main_data").load("404.html");
         $(this).addClass('active').siblings().removeClass('active');
+    })
+
+    $(".flag-icon-gb").click(function(){
+        GB = true;
+        SE = false;
+
+        //left part of navbar
+        document.getElementById("home").innerHTML = "<a>Home</a>";
+        document.getElementById("store").innerHTML = "<a>Store</a>";
+        document.getElementById("about").innerHTML = "<a>About</a>";
+        document.getElementById("contact").innerHTML = "<a>Contact</a>";
+
+        //dropdown
+        document.getElementById("customer").innerHTML = "<a>Customer</a>";
+        document.getElementById("purchaces_get").innerHTML = "<a>My Purchases</a>";
+        document.getElementById("payments_get").innerHTML = "<a>My Payments</a>";
+        document.getElementById("iou_get").innerHTML = "<a>My Iou's</a>";
+        document.getElementById("admin").innerHTML = "<a>Admin</a>";
+        document.getElementById("user_get_all").innerHTML = "<a>Members</a>";
+        document.getElementById("inventory_get").innerHTML = "<a>Inventory</a>";
+        document.getElementById("purchaces_get_all").innerHTML = "<a>All Purchases</a>";
+        document.getElementById("payments_get_all").innerHTML = "<a>All Payments</a>";
+        document.getElementById("iou_get_all").innerHTML = "<a>All Iou's</a>";
+
+        //right part of navbar
+        document.getElementById("shopping-cart").innerHTML =
+            "<span class='fa fa-shopping-cart'></span>" + " Items:" +
+            "<span id='cart_items' class='badge'>0</span>";
+        document.getElementById("shopping-cart-items").innerHTML = " Total Sum:" +
+            "<span id='cart_input'>0</span>";
+        $("#login-credentials").html('Login Credentials');
+
+        //the rest
+        var str = location.href;
+        var arr = str.split("#");
+
+        // we know this
+        var loc = arr[1];
+        console.log(loc)
+        switch(loc){
+            case "purchases_get":
+                document.getElementById("pre_table_header").innerHTML = "My purchases";
+                document.getElementById('purchaces_get_time').innerHTML = "Time";
+                document.getElementById('purchaces_get_name').innerHTML = "Name";
+                document.getElementById('purchaces_get_price').innerHTML = "Price";
+                document.getElementById('purchase-total').innerHTML = "Total:"
+                break;
+            case "payments_get":
+                document.getElementById("pre_table_header").innerHTML = "My payments";
+                document.getElementById('payments_get_time').innerHTML = "Time";
+                document.getElementById('payments_get_amount').innerHTML = "Amount";
+                document.getElementById('payments_get_total').innerHTML = "Total:"
+                break;
+            case "inventory_get":
+                document.getElementById("pre_table_header").innerHTML = "Inventory";
+                document.getElementById('inventory_get_id').innerHTML = "Id";
+                document.getElementById('inventory_get_name').innerHTML = "Name";
+                document.getElementById('inventory_get_sbl_price').innerHTML = "Sbl price";
+                document.getElementById('inventory_get_pub_price').innerHTML = "Pub price";
+                document.getElementById('inventory_get_price').innerHTML = "price";
+                document.getElementById('inventory_get_available').innerHTML = "Available";
+                break;
+            case "user_get_all":
+                document.getElementById("pre_table_header").innerHTML = "All members";
+                document.getElementById('user_get_all_usernamn').innerHTML = "Username";
+                document.getElementById('user_get_all_firstname').innerHTML = "Firstname";
+                document.getElementById('user_get_all_lastname').innerHTML = "Lastname";
+                document.getElementById('user_get_all_email').innerHTML = "Email";
+                document.getElementById('user_get_all_phone').innerHTML = "Phone";
+                break;
+            case "purchaces_get_all":
+                document.getElementById("pre_table_header").innerHTML = "All purchases";
+                document.getElementById('purchases_get_all_time').innerHTML = "Time";
+                document.getElementById('purchases_get_all_name').innerHTML = "Item";
+                document.getElementById('purchases_get_all_price').innerHTML = "Price";
+                document.getElementById('purchases_get_all_username').innerHTML = "Username";
+                document.getElementById('purchases_get_all_fullname').innerHTML = "Fullname";
+                break;
+            case "payments_get_all":
+                document.getElementById("pre_table_header").innerHTML = "All payments";
+                document.getElementById('payments_get_all_time').innerHTML = "Time";
+                document.getElementById('payments_get_all_amount').innerHTML = "Amount";
+                document.getElementById('payments_get_all_username').innerHTML = "Username";
+                document.getElementById('payments_get_all_name').innerHTML = "Name";
+                break;
+            case "iou_get_all":
+                document.getElementById("pre_table_header").innerHTML = "All debts";
+                document.getElementById('iou_get_all_username').innerHTML = "Username";
+                document.getElementById('iou_get_all_firstname').innerHTML = "Firstname";
+                document.getElementById('iou_get_all_lastname').innerHTML = "Lastname";
+                document.getElementById('iou_get_all_amount').innerHTML = "Amount";
+                break;
+            default: alert("Why are we here.")
+        }
+
+        $(".buy-btn").html('Buy');
+
+        //location.reload();
+
+        /*var path = window.location.pathname;
+         $("#main_data").load(path);
+
+         console.log("GB: " + GB);
+         console.log("SE: " + SE);*/
+    });
+
+    $(".flag-icon-se").click(function(){
+        GB = false;
+        SE = true;
+
+        //left part of navbar
+        document.getElementById("home").innerHTML = "<a>Hem</a>";
+        document.getElementById("store").innerHTML = "<a>Shop</a>";
+        document.getElementById("about").innerHTML = "<a>Om</a>";
+        document.getElementById("contact").innerHTML = "<a>Kontakta oss</a>";
+
+        //dropdown
+        document.getElementById("customer").innerHTML = "<a>Kunder</a>";
+        document.getElementById("purchaces_get").innerHTML = "<a>Mina inköp</a>";
+        document.getElementById("payments_get").innerHTML = "<a>Mina inbetalningar</a>";
+        document.getElementById("iou_get").innerHTML = "<a>Mina skulder</a>";
+        document.getElementById("admin").innerHTML = "<a>Administratör</a>";
+        document.getElementById("user_get_all").innerHTML = "<a>Medlemmar</a>";
+        document.getElementById("inventory_get").innerHTML = "<a>Inventarie</a>";
+        document.getElementById("purchaces_get_all").innerHTML = "<a>Alla inköp</a>";
+        document.getElementById("payments_get_all").innerHTML = "<a>Alla betalningar</a>";
+        document.getElementById("iou_get_all").innerHTML = "<a>Alla skulder</a>";
+
+        //right part of navbar
+        document.getElementById("shopping-cart").innerHTML =
+            "<span class='fa fa-shopping-cart'></span>" + " Artiklar:" +
+            "<span id='cart_items' class='badge'>0</span>";
+        document.getElementById("shopping-cart-items").innerHTML = " Summa:" +
+            "<span id='cart_input'>0</span>";
+        $("#login-credentials").html('Logga in');
+
+        //the rest
+        var str = location.href;
+        var arr = str.split("#");
+
+        // we know this
+        var loc = arr[1];
+        console.log(loc)
+        switch(loc){
+            case "purchases_get":
+                document.getElementById("pre_table_header").innerHTML = "Mina inköp";
+                document.getElementById('purchaces_get_time').innerHTML = "Tid";
+                document.getElementById('purchaces_get_name').innerHTML = "Namn";
+                document.getElementById('purchaces_get_price').innerHTML = "Pris";
+                document.getElementById('purchase-total').innerHTML = "Summa:"
+                break;
+            case "payments_get":
+                document.getElementById("pre_table_header").innerHTML = "Mina betalningar";
+                document.getElementById('payments_get_time').innerHTML = "Tid";
+                document.getElementById('payments_get_amount').innerHTML = "Summa";
+                document.getElementById('payments_get_total').innerHTML = "Summa:"
+                break;
+            case "inventory_get":
+                document.getElementById("pre_table_header").innerHTML = "Inventarie";
+                document.getElementById('inventory_get_id').innerHTML = "Id";
+                document.getElementById('inventory_get_name').innerHTML = "Namn";
+                document.getElementById('inventory_get_sbl_price').innerHTML = "Sbl pris";
+                document.getElementById('inventory_get_pub_price').innerHTML = "Pub pris";
+                document.getElementById('inventory_get_price').innerHTML = "pris";
+                document.getElementById('inventory_get_available').innerHTML = "Antal";
+                break;
+            case "user_get_all":
+                document.getElementById("pre_table_header").innerHTML = "Alla medlemmar";
+                document.getElementById('user_get_all_usernamn').innerHTML = "Användarnamn";
+                document.getElementById('user_get_all_firstname').innerHTML = "Förnamn";
+                document.getElementById('user_get_all_lastname').innerHTML = "Efternamn";
+                document.getElementById('user_get_all_email').innerHTML = "Email";
+                document.getElementById('user_get_all_phone').innerHTML = "Telefon";
+                break;
+            case "purchaces_get_all":
+                document.getElementById("pre_table_header").innerHTML = "Kund underlag";
+                document.getElementById('purchases_get_all_time').innerHTML = "Tid";
+                document.getElementById('purchases_get_all_name').innerHTML = "Artikel";
+                document.getElementById('purchases_get_all_price').innerHTML = "Pris";
+                document.getElementById('purchases_get_all_username').innerHTML = "Användarnamn";
+                document.getElementById('purchases_get_all_fullname').innerHTML = "Namn";
+                break;
+            case "payments_get_all":
+                document.getElementById("pre_table_header").innerHTML = "Inbetalningar";
+                document.getElementById('payments_get_all_time').innerHTML = "Tid";
+                document.getElementById('payments_get_all_amount').innerHTML = "Summa";
+                document.getElementById('payments_get_all_username').innerHTML = "Användarnamn";
+                document.getElementById('payments_get_all_name').innerHTML = "Namn";
+                break;
+            case "iou_get_all":
+                document.getElementById("pre_table_header").innerHTML = "Skulder";
+                document.getElementById('iou_get_all_username').innerHTML = "Användarnamn";
+                document.getElementById('iou_get_all_firstname').innerHTML = "Förnamn";
+                document.getElementById('iou_get_all_lastname').innerHTML = "Efternamn";
+                document.getElementById('iou_get_all_amount').innerHTML = "Summa";
+                break;
+            default: alert("Why are we here.")
+        }
+
+        document.getElementById("jumbotron").innerHTML =
+            "<h1>Gränssnitts Programmering!</h1><p>" +
+            "<a class='btn btn-primary btn-lg' href='http://www.uu.se/en/admissions/master/selma/kursplan/?kpid=30749&type=1' role='button'>Lär mer</a>" +
+            "</p>";
+
+        document.getElementById("store-name").innerHTML = "Namn";
+        document.getElementById("store-price").innerHTML = "Pris";
+        document.getElementById("store-available").innerHTML = "Antal";
+
+        $(".buy-btn").html('Köp');
+
+    });
+
+    $("#nav-cart").click(function(){
+        var i = 0;
+
+        var length = items.length;
+        var html = "";
+
+        if(GB){
+            var tableHeader = "Checkout";
+
+            html ="<div class='row'>" +
+                "<div class='col-xs-4'><label class='control-label'></label>Item</div>" +
+                "<div class='col-xs-4'><label class='control-label'></label>price</div>" +
+                "<div class='col-xs-4'><label class='control-label'></label>Quantity</div>" +
+                "</div>";
+        } else {
+            var tableHeader = "Kundvagn";
+
+            html ="<div class='row'>" +
+                "<div class='col-xs-4'><label class='control-label'></label>Artikel</div>" +
+                "<div class='col-xs-4'><label class='control-label'></label>pris</div>" +
+                "<div class='col-xs-4'><label class='control-label'></label>Antal</div>" +
+                "</div>";
+        }
+
+
+        for(i; i < length; i++){
+
+            var ITEM = items[i].beer_name;
+            var PRICE = items[i].price;
+            var NUMBER = items[i].number_of_beers;
+
+            html = html + "<div class='row'>" +
+                "<div class='col-xs-4'>" + ITEM + "</div>" +
+                "<div class='col-xs-4'>" + (parseFloat(PRICE) * parseFloat(NUMBER)).toFixed(2) + "</div>" +
+                "<div class='col-xs-4'>" + NUMBER + "</div>" +
+                "</div>"
+        }
+
+        $('#myModal').modal('show')
+        $("#login").hide();
+        $("#checkout").show();
+
+        document.getElementById("myModalLabel").innerHTML = tableHeader;
+        document.getElementById("modal-body").innerHTML = html;
+
     })
 
     $(document).on('click','.buy-btn', function(event){
@@ -703,7 +1093,8 @@ $(document).ready(function(){
         var totalSum = calculateTotalSum(items)
 
         document.getElementById("cart_items").innerHTML = cartLength;
-        $("#cart_input").val(totalSum);
+        document.getElementById("cart_input").innerHTML = totalSum;
+        //$("#cart_input").val(totalSum);
 
     })
 
@@ -715,14 +1106,30 @@ $(document).ready(function(){
         console.log(beer_id);
     })
 
-    var d = new Date();
+    var html = "";
 
-    document.getElementById("today").innerHTML = d;
+    if(GB == "" && SE == ""){
+        GB = true;
+        SE = false;
+    }
 
-    $("#cart_input").val(0);
+    if(GB){
+        html = "<h1>User Interface Programming!</h1>";
+    }else{
+        html = "<h1>Gränssnitts Programmering!</h1>";
+    }
+
+    html = html +
+        "<p>" +
+        "<a class='btn btn-primary btn-lg' href='http://www.uu.se/en/admissions/master/selma/kursplan/?kpid=30749&type=1' role='button'>Learn more</a>" +
+        "</p>"
+
+    $("#main_data").load("Partial_View/index2.html", function(){
+        document.getElementById("jumbotron").innerHTML = html;
+    });
 
     /*$('#insert_table').on('click','.clickable', function(event) {
-        $(this).addClass('selected').siblings().removeClass('selected');
-    });*/
+     $(this).addClass('selected').siblings().removeClass('selected');
+     });*/
 
 })

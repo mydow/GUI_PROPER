@@ -1,8 +1,8 @@
 /* set color on cart labels */
-
-#nav-cart{
+.navbar-inverse .navbar-text {
     color: white;
 }
+
 
 /* Setting the cursors */
 
@@ -11,13 +11,13 @@ ul li  a {
     cursor: pointer;
 }
 
-/* cart-input cursor */
-#cart_input{
-    cursor: not-allowed;
-}
-
 /* information cursor in the store */
 .beer-info{
+    cursor: pointer;
+}
+
+/* cart cursor */
+#nav-cart{
     cursor: pointer;
 }
 
@@ -30,6 +30,13 @@ ul li  a {
 
 .icon-margin{
     margin-right: 5px;
+}
+
+#trashcan{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 20px;
 }
 
 /*

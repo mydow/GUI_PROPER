@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="css/bootstrap-theme.css">
     <link rel="stylesheet" href="css/sticky_header_footer.css">
     <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="css/flag-icon.css">
     <link rel="stylesheet" href="css/site.css">
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
 
@@ -31,38 +32,45 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li id="home" class="active"><a href="#">Home</a></li>
+                <li id="home" class="active"><a>Home</a></li>
                 <li id="store"><a>Store</a></li>
                 <li id="about"><a>About</a></li>
                 <li id="contact"><a>Contact</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li class="dropdown-header">Customers</li>
-                        <li id="purchaces_get"><a>My Purchases</a></li>
-                        <li id="payments_get"><a>My Payments</a></li>
-                        <li id="iou_get"><a>My Iou's</a></li>
+                        <li id="customer" class="dropdown-header">Customers</li>
+                        <li id="purchaces_get"><a href="#purchases_get">My Purchases</a></li>
+                        <li id="payments_get"><a href="#payments_get">My Payments</a></li>
+                        <li id="iou_get"><a href="#iou_get">My Iou's</a></li>
                         <li role="separator" class="divider"></li>
-                        <li class="dropdown-header">Admin</li>
-                        <li id="user_get_all"><a>Members</a></li>
-                        <li id="inventory_get"><a>Inventory</a></li>
-                        <li id="purchaces_get_all"><a>All Purchases</a></li>
-                        <li id="payments_get_all"><a>All Payments</a></li>
-                        <li id="iou_get_all"><a>All Iou's</a></li>
+                        <li id="admin" class="dropdown-header">Admin</li>
+                        <li id="user_get_all"><a href="#user_get_all">Members</a></li>
+                        <li id="inventory_get"><a href="#inventory_get">Inventory</a></li>
+                        <li id="purchaces_get_all"><a href="#purchaces_get_all">All Purchases</a></li>
+                        <li id="payments_get_all"><a href="#payments_get_all">All Payments</a></li>
+                        <li id="iou_get_all"><a href="#iou_get_all">All Iou's</a></li>
                     </ul>
                 </li>
             </ul>
 
-            <button type="button" class="btn btn-success navbar-right navbar-btn" data-toggle="modal" data-target="#myModal">Login credentials</button>
+            <button type="button" id="login-credentials" class="btn btn-success navbar-right navbar-btn" data-toggle="modal" data-target="#myModal">Login credentials</button>
 
-            <form id="nav-cart" class="navbar-form navbar-right">
-                <div class="form-group">
-                    <label class="control-label"><span class="fa fa-shopping-cart"></span> Items:
+            <div id="nav-cart" class="navbar-right">
+                <div id="shopping-cart" class="navbar-text">
+                    <span class="fa fa-shopping-cart"></span> Items:
                     <span id="cart_items" class="badge">0</span>
-                    </label>
-                    <input id="cart_input" class="form-control disabled" placeholder="0">
                 </div>
-            </form>
+                <div id="shopping-cart-items" class="navbar-text">
+                    Total Sum:
+                    <span id="cart_input">0</span>
+                </div>
+            </div>
+
+            <div class="navbar-text navbar-right">
+                <span class="flag-icon flag-icon-gb"></span>
+                <span class="flag-icon flag-icon-se"></span>
+            </div>
         </div><!--/.nav-collapse -->
     </div>
 </nav>
@@ -77,6 +85,14 @@
         <p class="text-muted">&copy  <span id="today"></span> User Interface Programming.</p>
     </div>
 </footer>
+
+<div id="trashcan" class="">
+    <div><span class="fa fa-trash fa-4x"></span></div>
+    <div>
+        <button class="btn btn-default btn-sm disabled">Undo</button>
+        <button class="btn btn-default btn-sm disabled">Redo</button>
+    </div>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -106,6 +122,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="checkout" type="button" class="btn btn-primary">Checkout</button>
                 <button id="login" type="button" class="btn btn-primary">Login</button>
             </div>
         </div>

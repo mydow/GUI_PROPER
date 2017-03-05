@@ -55,7 +55,7 @@ $(document).ready(function(){
                                 "<td>"+ AVAILABLE +"</td>" +
                                 "<td>" +
                                 "<span class='beer-info icon-margin fa fa-info'>&nbsp</span>" +
-                                "<button class='buy-btn btn btn-success btn-sm'>Buy</button>" +
+                                "<button class='buy-btn btn btn-success btn-sm' draggable='true'>Buy</button>" +
                                 "</td>" +
                                 "</tr>"
                         }
@@ -141,7 +141,7 @@ $(document).ready(function(){
                             var table_title = "Your purchases";
 
                             var table_head = "<tr>"+
-                                "<th><span id='purchaces_get_time' class='text'>Time</idspan></th>" +
+                                "<th><span id='purchaces_get_time' class='text'>Time</span></th>" +
                                 "<th><span id='purchaces_get_name' class='text'>Name</span></th>" +
                                 "<th><span id='purchaces_get_price' class='text'>Price</span></th>" +
                                 "</tr>"
@@ -1127,6 +1127,10 @@ $(document).ready(function(){
     $("#main_data").load("Partial_View/index2.html", function(){
         document.getElementById("jumbotron").innerHTML = html;
     });
+
+    $(document).on('draggable', '.buy-btn', function(){
+        alert("DRAG ME PLS!");
+    })
 
     /*$('#insert_table').on('click','.clickable', function(event) {
      $(this).addClass('selected').siblings().removeClass('selected');

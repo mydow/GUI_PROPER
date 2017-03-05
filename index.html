@@ -31,14 +31,14 @@
             <a class="navbar-brand" href="index.html">MosEisley Cantina</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
+            <ul id="navbar-id" class="nav navbar-nav">
                 <li id="home" class="active"><a>Home</a></li>
                 <li id="store"><a>Store</a></li>
                 <li id="about"><a>About</a></li>
                 <li id="contact"><a>Contact</a></li>
-                <li class="dropdown">
+                <li id="dropdown-menu" class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
+                    <ul id="dropdown-menu-id" class="dropdown-menu">
                         <li id="customer" class="dropdown-header">Customers</li>
                         <li id="purchaces_get"><a href="#purchases_get">My Purchases</a></li>
                         <li id="payments_get"><a href="#payments_get">My Payments</a></li>
@@ -67,9 +67,9 @@
                 </div>
             </div>
 
-            <div class="navbar-text navbar-right">
-                <span class="flag-icon flag-icon-gb"></span>
-                <span class="flag-icon flag-icon-se"></span>
+            <div id="flag-icon" class="navbar-text navbar-right">
+                <span id="flag-icon-gb" class="flag-icon flag-icon-gb"></span>
+                <span id="flag-icon-se" class="flag-icon flag-icon-se"></span>
             </div>
         </div><!--/.nav-collapse -->
     </div>
@@ -89,8 +89,8 @@
 <div id="trashcan" class="">
     <div><span class="fa fa-trash fa-4x"></span></div>
     <div>
-        <button class="btn btn-default btn-sm disabled">Undo</button>
-        <button class="btn btn-default btn-sm disabled">Redo</button>
+        <button id="undo" class="btn btn-default btn-sm">Undo</button>
+        <button id="redo" class="btn btn-default btn-sm">Redo</button>
     </div>
 </div>
 
@@ -130,6 +130,7 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
 <script src="js/plugins.js"></script>
 <script src="js/drag_n_drop.js"></script>

@@ -55,7 +55,7 @@ $(document).ready(function(){
                                 "<td>"+ AVAILABLE +"</td>" +
                                 "<td>" +
                                 "<span class='beer-info icon-margin fa fa-info'>&nbsp</span>" +
-                                "<button class='buy-btn btn btn-success btn-sm' draggable='true'>Buy</button>" +
+                                "<button class='buy-btn btn btn-success btn-sm'>Buy</button>" +
                                 "</td>" +
                                 "</tr>"
                         }
@@ -1128,9 +1128,109 @@ $(document).ready(function(){
         document.getElementById("jumbotron").innerHTML = html;
     });
 
-    $(document).on('draggable', '.buy-btn', function(){
-        alert("DRAG ME PLS!");
+    $(".buy-btn").draggable({
+        cancel: false
+    });
+
+    $("#home").draggable({
+        helper: "clone"
+    });
+
+    $("#store").draggable({
+        helper: "clone"
+    });
+
+    $("#about").draggable({
+        helper: "clone"
+    });
+
+    $("#contact").draggable({
+        helper: "clone"
+    });
+
+    $("#dropdown-menu").draggable({
+        helper: "clone",
+        cancel: false
+    });
+
+    $("#flag-icon-gb").draggable({
+        helper: "clone"
+    });
+
+    $("#flag-icon-se").draggable({
+        helper: "clone"
+    });
+
+    $("#nav-cart").draggable({
+        helper: "clone"
+    });
+
+    $("#shopping-cart").draggable({
+        helper: "clone"
+    });
+
+    $("#cart_items").draggable({
+        helper: "clone"
+    });
+
+    $("#shopping-cart-items").draggable({
+        helper: "clone"
+    });
+
+    $("#cart_input").draggable({
+        helper: "clone"
+    });
+
+    $("#login-credentials").draggable({
+        helper: "clone",
+        cancel: false
+    });
+
+    $( "#trashcan" ).droppable({
+        drop: function(event, ui) {
+            var droppedId = ui.helper.prevObject.prop('id');
+            var Element = document.getElementById(droppedId);
+            var Data = Element.innerHTML;
+            var ParentId = document.getElementById(droppedId).parentNode.id;
+
+            var elem = new element(ParentId,droppedId,Element,Data);
+            addUndo(elem);
+
+            /*console.log(ParentId);
+            console.log(Data);*/
+            console.log("UNDO: " + undo.length)
+            $("#" + droppedId).remove();
+        }
+    });
+
+    $('#undo').click(function(){
+        console.log("undo Undo: " + undo.length);
+
+        var length = undo.length;
+
+        if(length != 0){
+            var elem = popUndo();
+            addRedo(elem);
+        }
+
+        console.log("undo Redo: " + redo.length);
+    });
+
+    $('#redo').click(function(){
+        console.log("redo Redo: " + redo.length);
+
+        var length = redo.length;
+
+        if(length != 0){
+            var elem = popRedo();
+            addUndo(elem);
+            //$(elem.CurrentId).remove();
+        }
+
+        console.log("redo Undo: " + undo.length);
     })
+
+    //$(document).on('draggable', '.buy-btn', {'cancel': false})
 
     /*$('#insert_table').on('click','.clickable', function(event) {
      $(this).addClass('selected').siblings().removeClass('selected');

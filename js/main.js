@@ -48,7 +48,7 @@ $(document).ready(function(){
                         //console.log(length)
 
                         if(ID != "" && NAME != "" && AVAILABLE > 0){
-                            html = html + "<tr class='clickable'>" +
+                            html = html + "<tr'>" +
                                 "<td>"+ ID +"</td>" +
                                 "<td>"+ NAME +"</td>" +
                                 "<td>"+ PRICE +"</td>" +
@@ -1078,7 +1078,7 @@ $(document).ready(function(){
 
     })
 
-    $(document).on('click','.buy-btn', function(event){
+    $(document).on('click','.buy-btn', function(){
         var row = $(this).closest("tr") // get current row
 
         var beer_id=row.find("td:eq(0)").text(); // get current row 1st TD value
@@ -1128,9 +1128,10 @@ $(document).ready(function(){
         document.getElementById("jumbotron").innerHTML = html;
     });
 
-    $(".buy-btn").draggable({
+/*    $(".buy-btn").draggable({
+        helper: clone,
         cancel: false
-    });
+    });*/
 
     $("#home").draggable({
         helper: "clone"
@@ -1188,47 +1189,91 @@ $(document).ready(function(){
 
     $( "#trashcan" ).droppable({
         drop: function(event, ui) {
+
+
             var droppedId = ui.helper.prevObject.prop('id');
             var Element = document.getElementById(droppedId);
             var Data = Element.innerHTML;
             var ParentId = document.getElementById(droppedId).parentNode.id;
 
             var elem = new element(ParentId,droppedId,Element,Data);
+
             addUndo(elem);
+
+            var length = undo.length;
+            if(length > 0){
+                $('#undo').removeClass('disabled');
+            }
 
             /*console.log(ParentId);
             console.log(Data);*/
-            console.log("UNDO: " + undo.length)
+            //console.log("UNDO: " + undo.length)
             $("#" + droppedId).remove();
         }
     });
 
     $('#undo').click(function(){
-        console.log("undo Undo: " + undo.length);
-
         var length = undo.length;
 
-        if(length != 0){
+        if(length > 0){
             var elem = popUndo();
             addRedo(elem);
+            $('#redo').removeClass('disabled');
+            if(undo.length == 0){
+                $('#undo').addClass('disabled');
+            }
         }
 
-        console.log("undo Redo: " + redo.length);
+        var parentId = elem.ParentId;
+        var undoElement = elem.Current;
+
+        document.getElementById(parentId).appendChild(undoElement);
+
+        //console.log("undo Undo: " + undo.length);
+        //console.log("undo Redo: " + redo.length);
     });
 
     $('#redo').click(function(){
-        console.log("redo Redo: " + redo.length);
-
         var length = redo.length;
 
-        if(length != 0){
+        if(length > 0){
             var elem = popRedo();
             addUndo(elem);
-            //$(elem.CurrentId).remove();
-        }
+            $('#undo').removeClass('disabled');
 
-        console.log("redo Undo: " + undo.length);
+            $("#" + elem.CurrentId).remove();
+
+            if(redo.length == 0){
+                $('#redo').addClass('disabled');
+            }
+        }
+        //console.log("redo Redo: " + redo.length);
+        //console.log("redo Undo: " + undo.length);
     })
+
+    $('tr').draggable({
+        helper: 'clone'
+    });
+
+    /*$('#insert_table tr.selectedItem').draggable({
+        helper: function(){
+            // var selected = $('#insert_table tr.selectedItem');
+            var selected = $(this).closest("tr") // get current row
+            console.log(selected);
+            var container = $('<div/>').attr('id', 'draggingContainer');
+            container.append(selected.clone())
+            return container;
+        }
+    });*/
+
+    //$('#myTable tbody#insert_table').draggable();
+
+    // this function works but i'm not gonna use it.
+    /*$(document).on('click', '#insert_table tr', function(){
+        var row = $(this).closest("tr") // get current row
+        console.log("click: " + row)
+        row.addClass('selectedItem').siblings().removeClass('selectedItem');
+    });*/
 
     //$(document).on('draggable', '.buy-btn', {'cancel': false})
 

@@ -22,7 +22,8 @@ function addUndo(elem){
 
 // we remove a element from undo array
 function popUndo(){
-    return undo.pop();
+    var elem = undo.pop();
+    return elem;
 }
 
 // we add a element to the redo array
@@ -32,7 +33,8 @@ function addRedo(elem){
 
 // we remove a element from the redo array
 function popRedo(){
-    return undo.pop();
+    var elem = redo.pop();
+    return elem;
 }
 
 /*function drag(ev) {

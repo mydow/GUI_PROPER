@@ -21,10 +21,14 @@ ul li  a {
     cursor: pointer;
 }
 
+.flag-icon{
+    cursor: pointer;
+}
+
 /* END Setting the cursors END */
 
 /* set background color for table rows */
-.selected {
+.selectedItem {
     background-color: #5cb85c;
 }
 

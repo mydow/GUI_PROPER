@@ -77,3 +77,9 @@ table.tableSection tr {
     display: table;
     table-layout: fixed;
 }
+
+@media only screen and (max-width: 500px) {
+    body {
+        background-color: lightblue;
+    }
+}

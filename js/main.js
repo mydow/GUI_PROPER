@@ -83,13 +83,21 @@ $(document).ready(function(){
                             "</tr>"
                     }
 
-
-
                     $("#main_data").load("Partial_View/main_table.html", function(){
                         document.getElementById("pre_table_header").innerHTML = table_title;
                         document.getElementById("header_table").innerHTML = table_head;
                         document.getElementById("insert_table").innerHTML = html;
                     });
+
+                    var Width = $(window).width();
+                    if (Width < 700) {
+                        $('#myTable').find('tr :nth-child(1)').hide();
+                    }
+
+                    if(Width < 500){
+                        $('#myTable').find('tr :nth-child(4)').hide();
+                    }
+
                 };
             })
 
@@ -1128,10 +1136,10 @@ $(document).ready(function(){
         document.getElementById("jumbotron").innerHTML = html;
     });
 
-/*    $(".buy-btn").draggable({
-        helper: clone,
-        cancel: false
-    });*/
+    /*    $(".buy-btn").draggable({
+     helper: clone,
+     cancel: false
+     });*/
 
     $("#home").draggable({
         helper: "clone"
@@ -1206,7 +1214,7 @@ $(document).ready(function(){
             }
 
             /*console.log(ParentId);
-            console.log(Data);*/
+             console.log(Data);*/
             //console.log("UNDO: " + undo.length)
             $("#" + droppedId).remove();
         }
@@ -1251,29 +1259,40 @@ $(document).ready(function(){
         //console.log("redo Undo: " + undo.length);
     })
 
-    $('tr').draggable({
-        helper: 'clone'
-    });
+    $(window).resize(function(){
+        var Width = $(window).width();
+        if (Width < 700) {
+            $('#myTable').find('tr :nth-child(1)').hide();
+        } else if(Width > 700) {
+            $('#myTable').find('tr :nth-child(1)').show();
+        }
+
+        if(Width < 500){
+            $('#myTable').find('tr :nth-child(4)').hide();
+        } else if(Width > 500){
+            $('#myTable').find('tr :nth-child(4)').show();
+        }
+    })
 
     /*$('#insert_table tr.selectedItem').draggable({
-        helper: function(){
-            // var selected = $('#insert_table tr.selectedItem');
-            var selected = $(this).closest("tr") // get current row
-            console.log(selected);
-            var container = $('<div/>').attr('id', 'draggingContainer');
-            container.append(selected.clone())
-            return container;
-        }
-    });*/
+     helper: function(){
+     // var selected = $('#insert_table tr.selectedItem');
+     var selected = $(this).closest("tr") // get current row
+     console.log(selected);
+     var container = $('<div/>').attr('id', 'draggingContainer');
+     container.append(selected.clone())
+     return container;
+     }
+     });*/
 
     //$('#myTable tbody#insert_table').draggable();
 
     // this function works but i'm not gonna use it.
     /*$(document).on('click', '#insert_table tr', function(){
-        var row = $(this).closest("tr") // get current row
-        console.log("click: " + row)
-        row.addClass('selectedItem').siblings().removeClass('selectedItem');
-    });*/
+     var row = $(this).closest("tr") // get current row
+     console.log("click: " + row)
+     row.addClass('selectedItem').siblings().removeClass('selectedItem');
+     });*/
 
     //$(document).on('draggable', '.buy-btn', {'cancel': false})
 

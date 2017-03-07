@@ -22,7 +22,7 @@ $(document).ready(function(){
 
     document.getElementById("today").innerHTML = d;
 
-    $("#cart_input").val(0);
+    //$("#cart_input").val(0);
 
     $("#store").click(function(){
         $(this).addClass('active').siblings().removeClass('active');
@@ -969,7 +969,7 @@ $(document).ready(function(){
 
         // we know this
         var loc = arr[1];
-        console.log(loc)
+        //console.log(loc)
         switch(loc){
             case "purchases_get":
                 document.getElementById("pre_table_header").innerHTML = "Mina inköp";
@@ -1261,17 +1261,74 @@ $(document).ready(function(){
 
     $(window).resize(function(){
         var Width = $(window).width();
+
+        //the rest
+        var str = location.href;
+        var arr = str.split("#");
+        // we know this
+        var loc = arr[1];
         if (Width < 700) {
-            $('#myTable').find('tr :nth-child(1)').hide();
+            switch(loc){
+                case "Store": $('#myTable').find('tr :nth-child(1)').hide();
+                    break;
+                case "user_get_all": $('#myTable').find('tr :nth-child(5)').hide();
+                    break;
+                case "inventory_get": $('#myTable').find('tr :nth-child(3)').hide();
+                    break;
+                case "purchaces_get_all": $('#myTable').find('tr :nth-child(5)').hide();
+                    break;
+                case "payments_get_all": $('#myTable').find('tr :nth-child(4)').hide();
+                    break;
+                case "iou_get_all": $('#myTable').find('tr :nth-child(2)').hide();
+                    $('#myTable').find('tr :nth-child(3)').hide();
+                    break;
+            };
         } else if(Width > 700) {
-            $('#myTable').find('tr :nth-child(1)').show();
-        }
+            switch(loc){
+                case "Store": $('#myTable').find('tr :nth-child(1)').show();
+                    break;
+                case "user_get_all": $('#myTable').find('tr :nth-child(5)').show();
+                    break;
+                case "inventory_get": $('#myTable').find('tr :nth-child(3)').show();
+                    break;
+                case "purchaces_get_all": $('#myTable').find('tr :nth-child(5)').show();
+                    break;
+                case "payments_get_all": $('#myTable').find('tr :nth-child(4)').show();
+                    break;
+                case "iou_get_all": $('#myTable').find('tr :nth-child(2)').show();
+                    $('#myTable').find('tr :nth-child(3)').show();
+                    break;
+            };
+        };
 
         if(Width < 500){
-            $('#myTable').find('tr :nth-child(4)').hide();
+            switch(loc){
+                case "Store": $('#myTable').find('tr :nth-child(4)').hide();
+                    break;
+                case "user_get_all": $('#myTable').find('tr :nth-child(4)').hide();
+                    break;
+                case "inventory_get": $('#myTable').find('tr :nth-child(4)').hide();
+                    break;
+                case "purchaces_get_all": $('#myTable').find('tr :nth-child(3)').hide();
+                    break;
+            };
         } else if(Width > 500){
-            $('#myTable').find('tr :nth-child(4)').show();
+            switch(loc){
+                case "Store": $('#myTable').find('tr :nth-child(4)').show();
+                    break;
+                case "user_get_all": $('#myTable').find('tr :nth-child(4)').show();
+                    break;
+                case "inventory_get": $('#myTable').find('tr :nth-child(4)').show();
+                    break;
+                case "purchaces_get_all": $('#myTable').find('tr :nth-child(3)').show();
+                    break;
+            };
         }
+    });
+
+    $("#width").click(function(){
+        var width = $(window).width();
+        alert(width);
     })
 
     /*$('#insert_table tr.selectedItem').draggable({
@@ -1285,16 +1342,16 @@ $(document).ready(function(){
      }
      });*/
 
-    //$('#myTable tbody#insert_table').draggable();
+//$('#myTable tbody#insert_table').draggable();
 
-    // this function works but i'm not gonna use it.
+// this function works but i'm not gonna use it.
     /*$(document).on('click', '#insert_table tr', function(){
      var row = $(this).closest("tr") // get current row
      console.log("click: " + row)
      row.addClass('selectedItem').siblings().removeClass('selectedItem');
      });*/
 
-    //$(document).on('draggable', '.buy-btn', {'cancel': false})
+//$(document).on('draggable', '.buy-btn', {'cancel': false})
 
     /*$('#insert_table').on('click','.clickable', function(event) {
      $(this).addClass('selected').siblings().removeClass('selected');

@@ -25,6 +25,10 @@ ul li  a {
     cursor: pointer;
 }
 
+#flag-icon-imp{
+    cursor: pointer;
+}
+
 /* END Setting the cursors END */
 
 /* set background color for table rows */
@@ -78,13 +82,9 @@ table.tableSection tr {
     table-layout: fixed;
 }
 
-/* Custom Imperial logo. sort of */
-.fa-circle-o{
-    color:black;
-}
-
-.fa-cog{
-    color:black;
+.aurebesh{
+    font-family: Aurebesh;
+    font-size: 1em;
 }
 
 @media only screen and (max-width: 500px) {

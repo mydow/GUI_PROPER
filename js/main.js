@@ -89,14 +89,6 @@ $(document).ready(function(){
                         document.getElementById("insert_table").innerHTML = html;
                     });
 
-                    var Width = $(window).width();
-                    if (Width < 700) {
-                        $('#myTable').find('tr :nth-child(1)').hide();
-                    }
-
-                    if(Width < 500){
-                        $('#myTable').find('tr :nth-child(4)').hide();
-                    }
 
                 };
             })
@@ -857,6 +849,13 @@ $(document).ready(function(){
             "<span id='cart_items' class='badge'>0</span>";
         document.getElementById("shopping-cart-items").innerHTML = " Total Sum:" +
             "<span id='cart_input'>0</span>";
+
+        var cartLength = items.length;
+        var totalSum = calculateTotalSum(items)
+
+        document.getElementById("cart_items").innerHTML = cartLength;
+        document.getElementById("cart_input").innerHTML = totalSum;
+
         $("#login-credentials").html('Login Credentials');
 
         //the rest
@@ -961,6 +960,13 @@ $(document).ready(function(){
             "<span id='cart_items' class='badge'>0</span>";
         document.getElementById("shopping-cart-items").innerHTML = " Summa:" +
             "<span id='cart_input'>0</span>";
+
+        var cartLength = items.length;
+        var totalSum = calculateTotalSum(items)
+
+        document.getElementById("cart_items").innerHTML = cartLength;
+        document.getElementById("cart_input").innerHTML = totalSum;
+
         $("#login-credentials").html('Logga in');
 
         //the rest
